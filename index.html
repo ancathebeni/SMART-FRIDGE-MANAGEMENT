@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Fridge</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="fridge-screen">
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+                🧊
+                <span>Smart Fridge</span>
+            </div>
+
+            <button class="nav-btn active" onclick="showPage('dashboard', this)">
+                🏠
+                <span>Dashboard</span>
+            </button>
+
+            <button class="nav-btn" onclick="showPage('products', this)">
+                📦
+                <span>My Products</span>
+            </button>
+
+            <button class="nav-btn" onclick="showPage('expiry', this)">
+                ⏰
+                <span>Expiry</span>
+            </button>
+
+            <button class="nav-btn" onclick="showPage('analytics', this)">
+                📊
+                <span>Analytics</span>
+            </button>
+
+            <div class="fridge-status">
+                <div class="status-dot"></div>
+                Fridge Online
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN SCREEN ================= -->
+
+        <main class="main-content">
+
+            <!-- TOP BAR -->
+
+            <header class="topbar">
+
+                <div>
+                    <h1 id="pageTitle">Dashboard</h1>
+                    <p id="currentDate"></p>
+                </div>
+
+                <div class="temperature">
+                    ❄️
+                    <strong>4°C</strong>
+                    <span>Normal</span>
+                </div>
+
+            </header>
+
+
+            <!-- ================= DASHBOARD ================= -->
+
+            <section id="dashboard" class="page active-page">
+
+                <div class="welcome">
+                    <div>
+                        <h2>Good Morning 👋</h2>
+                        <p>Here's what's happening inside your fridge.</p>
+                    </div>
+                </div>
+
+
+                <div class="cards">
+
+                    <div class="card">
+                        <div class="card-icon">📦</div>
+                        <h3>24</h3>
+                        <p>Total Products</p>
+                    </div>
+
+                    <div class="card warning">
+                        <div class="card-icon">⏰</div>
+                        <h3>5</h3>
+                        <p>Near Expiry</p>
+                    </div>
+
+                    <div class="card danger">
+                        <div class="card-icon">⚠️</div>
+                        <h3>2</h3>
+                        <p>Expired</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🥦</div>
+                        <h3>17</h3>
+                        <p>Fresh Items</p>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-grid">
+
+                    <!-- EXPIRING SOON -->
+
+                    <div class="panel">
+
+                        <div class="panel-title">
+                            <h2>⏰ Expiring Soon</h2>
+                            <button onclick="showPage('expiry')">
+                                View All
+                            </button>
+                        </div>
+
+                        <div class="food-item">
+
+                            <div class="food-icon">🥛</div>
+
+                            <div class="food-info">
+                                <strong>Milk</strong>
+                                <span>2 days remaining</span>
+                            </div>
+
+                            <div class="expiry-badge warning-badge">
+                                30 Jul
+                            </div>
+
+                        </div>
+
+
+                        <div class="food-item">
+
+                            <div class="food-icon">🥬</div>
+
+                            <div class="food-info">
+                                <strong>Spinach</strong>
+                                <span>3 days remaining</span>
+                            </div>
+
+                            <div class="expiry-badge warning-badge">
+                                31 Jul
+                            </div>
+
+                        </div>
+
+
+                        <div class="food-item">
+
+                            <div class="food-icon">🍗</div>
+
+                            <div class="food-info">
+                                <strong>Chicken</strong>
+                                <span>Expired</span>
+                            </div>
+
+                            <div class="expiry-badge danger-badge">
+                                Expired
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FRIDGE STATUS -->
+
+                    <div class="panel">
+
+                        <h2>🧊 Fridge Status</h2>
+
+                        <div class="status-row">
+                            <span>Temperature</span>
+                            <strong>4°C</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>Humidity</span>
+                            <strong>62%</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>Door</span>
+                            <strong class="green">Closed</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>Power</span>
+                            <strong class="green">Normal</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= PRODUCTS ================= -->
+
+            <section id="products" class="page">
+
+                <div class="page-heading">
+
+                    <div>
+                        <h2>My Products</h2>
+                        <p>Manage everything stored inside your fridge.</p>
+                    </div>
+
+                    <button class="primary-btn" onclick="openAddProduct()">
+                        + Add Product
+                    </button>
+
+                </div>
+
+
+                <div class="search-area">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="🔍 Search products..."
+                        onkeyup="searchProducts()">
+
+                    <select id="categoryFilter">
+                        <option>All Categories</option>
+                        <option>Dairy</option>
+                        <option>Vegetables</option>
+                        <option>Fruits</option>
+                        <option>Meat</option>
+                        <option>Beverages</option>
+                    </select>
+
+                </div>
+
+
+                <div class="product-grid" id="productGrid">
+
+                    <div class="product-card">
+
+                        <div class="product-image">🥛</div>
+
+                        <h3>Milk</h3>
+
+                        <p>Dairy</p>
+
+                        <div class="product-details">
+                            <span>Quantity</span>
+                            <strong>2</strong>
+                        </div>
+
+                        <div class="product-details">
+                            <span>Expires</span>
+                            <strong>30 Jul 2026</strong>
+                        </div>
+
+                        <div class="fresh-label">Fresh</div>
+
+                    </div>
+
+
+                    <div class="product-card">
+
+                        <div class="product-image">🥚</div>
+
+                        <h3>Eggs</h3>
+
+                        <p>Dairy</p>
+
+                        <div class="product-details">
+                            <span>Quantity</span>
+                            <strong>12</strong>
+                        </div>
+
+                        <div class="product-details">
+                            <span>Expires</span>
+                            <strong>02 Aug 2026</strong>
+                        </div>
+
+                        <div class="fresh-label">Fresh</div>
+
+                    </div>
+
+
+                    <div class="product-card">
+
+                        <div class="product-image">🍎</div>
+
+                        <h3>Apple</h3>
+
+                        <p>Fruits</p>
+
+                        <div class="product-details">
+                            <span>Quantity</span>
+                            <strong>6</strong>
+                        </div>
+
+                        <div class="product-details">
+                            <span>Expires</span>
+                            <strong>05 Aug 2026</strong>
+                        </div>
+
+                        <div class="fresh-label">Fresh</div>
+
+                    </div>
+
+
+                    <div class="product-card">
+
+                        <div class="product-image">🍗</div>
+
+                        <h3>Chicken</h3>
+
+                        <p>Meat</p>
+
+                        <div class="product-details">
+                            <span>Quantity</span>
+                            <strong>1</strong>
+                        </div>
+
+                        <div class="product-details">
+                            <span>Expires</span>
+                            <strong>27 Jul 2026</strong>
+                        </div>
+
+                        <div class="expired-label">Expired</div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= EXPIRY ================= -->
+
+            <section id="expiry" class="page">
+
+                <div class="page-heading">
+
+                    <div>
+                        <h2>Expiry Tracker</h2>
+                        <p>Keep track of food before it goes bad.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="expiry-summary">
+
+                    <div class="expiry-box green-box">
+                        <span>🟢</span>
+                        <div>
+                            <strong>17</strong>
+                            <p>Fresh</p>
+                        </div>
+                    </div>
+
+                    <div class="expiry-box yellow-box">
+                        <span>🟡</span>
+                        <div>
+                            <strong>5</strong>
+                            <p>Near Expiry</p>
+                        </div>
+                    </div>
+
+                    <div class="expiry-box red-box">
+                        <span>🔴</span>
+                        <div>
+                            <strong>2</strong>
+                            <p>Expired</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <h2>🟡 Near Expiry</h2>
+
+                    <div class="expiry-row">
+
+                        <div class="big-food-icon">🥛</div>
+
+                        <div class="expiry-info">
+                            <strong>Milk</strong>
+                            <span>Dairy • Quantity: 2</span>
+                        </div>
+
+                        <div>
+                            <strong>2 Days Left</strong>
+                            <small>30 Jul 2026</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="expiry-row">
+
+                        <div class="big-food-icon">🥬</div>
+
+                        <div class="expiry-info">
+                            <strong>Spinach</strong>
+                            <span>Vegetables • Quantity: 1</span>
+                        </div>
+
+                        <div>
+                            <strong>3 Days Left</strong>
+                            <small>31 Jul 2026</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="expiry-row">
+
+                        <div class="big-food-icon">🥛</div>
+
+                        <div class="expiry-info">
+                            <strong>Yogurt</strong>
+                            <span>Dairy • Quantity: 3</span>
+                        </div>
+
+                        <div>
+                            <strong>4 Days Left</strong>
+                            <small>01 Aug 2026</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel expired-panel">
+
+                    <h2>🔴 Expired Products</h2>
+
+                    <div class="expiry-row">
+
+                        <div class="big-food-icon">🍗</div>
+
+                        <div class="expiry-info">
+                            <strong>Chicken</strong>
+                            <span>Meat • Quantity: 1</span>
+                        </div>
+
+                        <div>
+                            <strong>Expired</strong>
+                            <small>27 Jul 2026</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= ANALYTICS ================= -->
+
+            <section id="analytics" class="page">
+
+                <div class="page-heading">
+
+                    <div>
+                        <h2>Fridge Analytics</h2>
+                        <p>Understand your food storage habits.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-cards">
+
+                    <div class="analytics-card">
+                        <span>📦</span>
+                        <h3>24</h3>
+                        <p>Total Items</p>
+                    </div>
+
+                    <div class="analytics-card">
+                        <span>🥦</span>
+                        <h3>35%</h3>
+                        <p>Vegetables</p>
+                    </div>
+
+                    <div class="analytics-card">
+                        <span>♻️</span>
+                        <h3>8%</h3>
+                        <p>Food Wasted</p>
+                    </div>
+
+                </div>
+
+
+                <div class="panel chart-panel">
+
+                    <h2>Product Categories</h2>
+
+                    <div class="bar">
+                        <span>Dairy</span>
+                        <div>
+                            <i style="width:70%"></i>
+                        </div>
+                        <strong>35%</strong>
+                    </div>
+
+                    <div class="bar">
+                        <span>Vegetables</span>
+                        <div>
+                            <i style="width:60%"></i>
+                        </div>
+                        <strong>30%</strong>
+                    </div>
+
+                    <div class="bar">
+                        <span>Fruits</span>
+                        <div>
+                            <i style="width:40%"></i>
+                        </div>
+                        <strong>20%</strong>
+                    </div>
+
+                    <div class="bar">
+                        <span>Meat</span>
+                        <div>
+                            <i style="width:30%"></i>
+                        </div>
+                        <strong>15%</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- ================= ADD PRODUCT POPUP ================= -->
+
+    <div class="modal" id="productModal">
+
+        <div class="modal-content">
+
+            <button class="close-btn" onclick="closeAddProduct()">×</button>
+
+            <h2>➕ Add Product</h2>
+
+            <label>Product Name</label>
+            <input type="text" id="productName" placeholder="Example: Milk">
+
+            <label>Category</label>
+
+            <select id="productCategory">
+                <option>Dairy</option>
+                <option>Vegetables</option>
+                <option>Fruits</option>
+                <option>Meat</option>
+                <option>Beverages</option>
+            </select>
+
+            <label>Quantity</label>
+            <input type="number" id="productQuantity" placeholder="Quantity">
+
+            <label>Expiry Date</label>
+            <input type="date" id="productExpiry">
+
+            <button class="primary-btn full-btn" onclick="addProduct()">
+                Add To Fridge
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
